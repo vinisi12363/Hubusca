@@ -54,6 +54,22 @@ align-items: center;
 justify-content: center;
 
 `
+export const ProfileButton = styled.TouchableOpacity`
+background-color: lightgray;
+border-radius:10px;
+width: 120px;
+height: 50px;
+position: relative;
+left: 150px;
+bottom: 50px;
+padding: 10px 20px;
+border-radius: 5px;
+margin-top: 20px;
+align-items: center;
+justify-content: center;
+
+`
+
 
 export const TextArea = styled.TextInput`
 background-color: #fff;

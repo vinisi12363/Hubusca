@@ -6,37 +6,44 @@ export const UserCard = styled(LinearGradient).attrs({
   start: { x: 0, y: 1 },
   end: { x: 1, y: 0 },
 })`
+  overflow: hidden;
   flex: 1;
   border-radius: 5px;
   max-height: 200px;
   width: 90%;
-  
-  margin-top: 20px; 
-  
+  padding-top: 45px;
+  padding-bottom: 20px; 
+  padding-left: 20px;
   justify-content: space-around;
 `;
 
 
 export const avatarIcon = styled.Image`
-    margin-top: 10px;
-    width: 130px;
-    height: 150px;
-    margin-bottom: 20px;
-    border-radius:50px;
-    margin-left: 10px;
+    position: relative;
+    top: 15px;
+    width: 100px;
+    height: 180px;
+    border-radius:30px;
+    
 `
 export const CardTitle = styled.Text`
-  
-    font-size: 20px;
+    
+    position: relative;
+    bottom: 50px;
+    left: 110px;
+    font-size: 18px;
+    font-weight: bold;
     font-family: 'Roboto';
-    color: black;
+    color: white;
   
 `
 
 export const CardSubtitle = styled.Text`
-
-    font-size: 20px;
+    position: relative;
+    bottom: 40px;
+    left: 110px;
+    font-size: 18px;
+    font-weight: bold;
     font-family: 'Roboto';
-    color: black;
-  
+    color: white;
 `

@@ -1,14 +1,9 @@
 // Exemplo de arquivo AppContext.tsx
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { User } from '../api/User';
 
-// Definir o tipo do usuário
-interface User {
-    avatar_url: string;
-    name: string;
-    login: string;
-    location:string;
-}
+
 
 // Definir o tipo do contexto
 interface UserContextType {

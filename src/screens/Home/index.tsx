@@ -1,21 +1,69 @@
 import React from 'react';
-import {Container , AppImage, AppButton, TextArea, SearchContainer} from './styles';
+import {Container , AppImage, AppButton, TextArea, SearchContainer, Subtitle} from './styles';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {Image } from 'react-native';
+import { Alert, View } from 'react-native';
+import * as userCard from '../../components/UserCard'
+import { useUserContext } from '../../Contexts/UserContext';
+import { getUser } from '../../api/User';
+
+interface User {
+    avatar_url: string;
+    name: string;
+    login: string;
+    location:string;
+}
 
 export default function Home() {
-    const [count, setCount] = React.useState(0);
+    const { user, fetchUser } = useUserContext();
+    const [username, setUsername] = React.useState<string>('');
+    
+    const searchUser = async () => {
+       if(username){
+        try {
+            const gitUser:User = await getUser(username);
+            fetchUser({name:gitUser.name, login:gitUser.login ,avatar_url:gitUser.avatar_url , location:gitUser.location});
+        } catch (error) {
+            Alert.alert('usuário não encontrado', 'verifique o nome do usuário e tente novamente');
+        }
+       }else {
+            Alert.alert('Erro: Campo vazio' , 'Digite o nome de usuário e tente novamente');
+       }
+      
+    }
+    
     return (
         <Container>
             <AppImage  source={require("../../../assets/hubusca.png")}></AppImage>    
             <SearchContainer>
             
-                <TextArea placeholder="Digite o nome do repositório"></TextArea>
-                <AppButton  onPress={()=>{setCount(count+1)}}>
-                <MaterialCommunityIcons name='magnify' size={35} color='#000' />
-                </AppButton>
-                <TextArea> Você clicou {count}</TextArea>
-            </SearchContainer>          
+            <TextArea 
+                value={username}
+                placeholder="Digite o username do usuário"
+                autoComplete='off'
+                autoFocus={true}
+                onChangeText={(text) => setUsername(text)}
+                autoCorrect={false}
+            ></TextArea>
+            
+            <MaterialCommunityIcons name='magnify' size={35} color='#000' />
+            
+            <AppButton onPress={()=>{searchUser()}}>
+                <Subtitle>Buscar</Subtitle>
+            </AppButton>
+            
+            </SearchContainer>
+
+            {user? <userCard.UserCard>
+                <userCard.avatarIcon source={{uri: user.avatar_url}}></userCard.avatarIcon>
+                <View>
+                    <userCard.CardTitle  ellipsizeMode='tail'>Nome: {user.name}</userCard.CardTitle>
+                    <userCard.CardSubtitle ellipsizeMode='tail'>login: {user.login}</userCard.CardSubtitle>
+                    <userCard.CardSubtitle ellipsizeMode='tail'>Localização: {user.location}</userCard.CardSubtitle>
+                
+                </View>
+              
+        
+            </userCard.UserCard>: <></>}          
         </Container>
     )
 }

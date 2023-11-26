@@ -2,9 +2,15 @@ import * as ProfileCard from "../../components/ProfileCard";
 import { useUserContext } from "../../Contexts/UserContext";
 import { Container } from "../Home/styles";
 import { View } from "react-native";
+import {useEffect} from 'react';
 
 export default function Profile() {
+
   const { user } = useUserContext();
+  useEffect(() => {
+
+  }, [user]);
+  
   return (
     <Container>
       <ProfileCard.ProfileCard>
@@ -41,7 +47,7 @@ export default function Profile() {
       <View>
         <ProfileCard.CardTitle>Repositórios</ProfileCard.CardTitle>
       </View>
-      
+
     </Container>
   );
 }

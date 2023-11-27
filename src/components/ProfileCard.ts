@@ -7,13 +7,12 @@ export const ProfileCard = styled(LinearGradient).attrs({
   end: { x: 1, y: 0 },
 })`
   position: relative;
-  bottom: 250px;
+  bottom: 0px;
   overflow: hidden;
   flex: 1;
   border-radius: 5px;
-  max-height: 200px;
-  width: 90%;
-  min-height: 350px;
+  height: 250px;
+  width: 100%;
   padding-top: 15px;
   padding-bottom: 20px;
   padding-left: 20px;

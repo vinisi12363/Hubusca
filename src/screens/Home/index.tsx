@@ -32,6 +32,7 @@ type Props = {
 export const Home = ({ navigation }: Props) => {
   const { user, fetchUser } = useUserContext();
   const [username, setUsername] = React.useState<string>("");
+  
   const searchUser = async () => {
     if (username) {
       try {
@@ -73,7 +74,7 @@ export const Home = ({ navigation }: Props) => {
           onChangeText={(text) => setUsername(text)}
           autoCorrect={false}
         >
-            
+
         </TextArea>
 
        

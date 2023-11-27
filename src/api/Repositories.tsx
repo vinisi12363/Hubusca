@@ -5,8 +5,8 @@ export interface Repo {
   name: string;
   language: string;
   description: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
 }
 
 export const getRepos = async (username: string) => {

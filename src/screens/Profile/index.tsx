@@ -1,17 +1,18 @@
-import * as ProfileCard from "../../components/ProfileCard";
-import { useUserContext } from "../../Contexts/UserContext";
-import { useRepoContext } from "../../Contexts/RepoContext";
-import { ProfileContainer, RepoView } from "./styles";
-import { Container } from "../Home/styles";
-import { View, ScrollView, Alert } from "react-native";
-import { useEffect, useState } from "react";
-import { Repo, getRepos } from "../../api/Repositories";
-import { format } from "date-fns";
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, Linking, Alert } from 'react-native';
+import { format } from 'date-fns';
+import { Container,ProfileContainer,ViewContainer, RepoView, TouchableArea , RepoContainer,Title,IconView} from './styles';
+import { useUserContext } from '../../Contexts/UserContext';
+import { useRepoContext } from '../../Contexts/RepoContext';
+import { getRepos, Repo } from '../../api/Repositories';
+import * as ProfileCard from '../../components/ProfileCard';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 
 export default function Profile() {
-  const { Repo, fetchRepo } = useRepoContext();
-  const [repos, setRepos] = useState<Repo[]>([]);
   const { user } = useUserContext();
+  const { Repo } = useRepoContext();
+  const [repos, setRepos] = useState<Repo[]>([]);
 
   useEffect(() => {
     loadRepos();
@@ -21,9 +22,9 @@ export default function Profile() {
     if (user?.login) {
       try {
         const gitRepo = await getRepos(user.login);
-        gitRepo.forEach((element:Repo)=>{
-            element.created_at = formatarData(element.created_at);
-            element.updated_at = formatarData(element.updated_at);
+        gitRepo.forEach((element: Repo) => {
+          element.created_at = formatarData(element.created_at);
+          element.updated_at = formatarData(element.updated_at);
         });
         const result = gitRepo.map((repo: Repo) => ({
           name: repo.name,
@@ -32,22 +33,26 @@ export default function Profile() {
           created_at: repo.created_at,
           updated_at: repo.updated_at,
         }));
-        console.log("result", result);
-        fetchRepo(result);
         setRepos(result);
       } catch (error) {
+        console.error('Erro de requisição:', error);
         Alert.alert(
-          "Erro de requisição",
-          "Houve um erro ao puxar os repositórios"
+          'Erro de requisição',
+          'Houve um erro ao puxar os repositórios'
         );
       }
     }
   };
 
-  function formatarData(data: string): string {
+  const formatarData = (data: string): string => {
     const formData = new Date(data);
-    return format(formData, "dd/MM/yyyy");
-  }
+    return format(formData, 'dd/MM/yyyy');
+  };
+
+  const openWebPage = (repo: string) => {
+    const url = `https://www.github.com/${user?.login}/${repo}`;
+    Linking.openURL(url);
+  };
 
   return (
     <Container>
@@ -74,30 +79,45 @@ export default function Profile() {
           </ProfileCard.CardSubtitle>
         </View>
       </ProfileCard.ProfileCard>
-
-      <ProfileContainer>
+      <ViewContainer>
+        <Title>Repositórios</Title>
+      </ViewContainer>
+      <RepoContainer>
         <ScrollView>
           {repos?.map((repo: Repo) => (
-            <RepoView key={repo.name}>
-              <ProfileCard.CardSubtitle>
-                Repositório: {repo.name}
-              </ProfileCard.CardSubtitle>
-              <ProfileCard.CardSubtitle>
-                Linguagem: {repo.language}
-              </ProfileCard.CardSubtitle>
-              <ProfileCard.CardSubtitle>
-                Descrição: {repo.description}
-              </ProfileCard.CardSubtitle>
-              <ProfileCard.CardSubtitle>
-                Criado em: {repo.created_at}
-              </ProfileCard.CardSubtitle>
-              <ProfileCard.CardSubtitle>
-                Último commit em: {repo.updated_at}
-              </ProfileCard.CardSubtitle>
-            </RepoView>
+            <>
+            
+            <TouchableArea key={repo.name} onPress={() => openWebPage(repo.name)}>
+          
+              <RepoView key={repo.name}>
+                <IconView>
+                <MaterialCommunityIcons
+                        name="folder-pound"
+                        size={80}
+                        color="#FFFFFF"
+                 />
+                </IconView>
+                <ProfileCard.CardSubtitle>
+                  Repositório: {repo.name}
+                </ProfileCard.CardSubtitle>
+                <ProfileCard.CardSubtitle>
+                  Linguagem: {repo.language}
+                </ProfileCard.CardSubtitle>
+                <ProfileCard.CardSubtitle>
+                  Descrição: {repo.description}
+                </ProfileCard.CardSubtitle>
+                <ProfileCard.CardSubtitle>
+                  Criado em: {repo.created_at}
+                </ProfileCard.CardSubtitle>
+                <ProfileCard.CardSubtitle>
+                  Último commit em: {repo.updated_at}
+                </ProfileCard.CardSubtitle>
+              </RepoView>
+            </TouchableArea>
+            </>
           ))}
         </ScrollView>
-      </ProfileContainer>
-    </Container>
+      </RepoContainer>
+      </Container>
   );
 }

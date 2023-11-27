@@ -7,6 +7,31 @@ export const RepoView = styled.View`
   padding-top: 45px;
   margin-bottom: 10px;
 `;
+export const IconView = styled.View`
+  flex: 1;
+  background-color: transparent;
+  width: 80px;
+  justify-content: start;
+  position: absolute;
+  bottom:20px;
+  left:300px;
+  
+  align-items: start;
+  z-index: 1;
+  max-height: 150px;
+  padding-top: 45px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+
+`
+export const TouchableArea = styled.TouchableOpacity`
+    flex: 1;
+    background-color: #red;
+    min-height: 200px;
+    padding-top: 45px;
+    margin-bottom: 10px;
+
+`;
 export const ProfileContainer = styled.View`
   flex: 1;
   boxsize: border-box;
@@ -20,6 +45,40 @@ export const ProfileContainer = styled.View`
   background-color: gray;
   align-items: center;
   justify-content: center;
+`;
+
+export const ViewContainer = styled.View`
+  flex: 1;
+  boxsize: border-box;
+  overflow: hidden;
+  margin-bottom: 8px;
+  width: 100%;
+  max-height: 65px;
+  background-color: #282828;
+  align-items: center;
+  justify-content: space-between;
+`;
+export const Container = styled.View`
+  flex: 1;
+  background-color: black;
+  align-items: center;
+  justify-content: center;
+`;
+export const Title = styled.Text`
+  font-size:40px;
+  font-family: "Roboto";
+  font-weight: 400;
+  color: white;
+`;
+export const RepoContainer = styled.View`
+  flex: 1;
+  boxsize: border-box;
+  overflow: hidden;
+  margin-bottom: 8px;
+  width: 100%;
+  background-color: black;
+  align-items: center;
+  justify-content: space-between;
 `;
 export const ScrollView = styled.ScrollView`
   background-color: red;
@@ -36,11 +95,7 @@ export const SearchContainer = styled.View`
   position: relative;
   bottom: 30px;
 `;
-export const Title = styled.Text`
-  font-size: 20px;
-  font-family: "Roboto";
-  color: blue;
-`;
+
 export const Subtitle = styled.Text`
   font-size: 25px;
   font-family: "Roboto";

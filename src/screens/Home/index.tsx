@@ -17,6 +17,8 @@ import { getUser } from "../../api/User";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StackNavigationProp } from "@react-navigation/stack";
+import * as Storage from "../../api/Storage";
+
 
 type StackParam = {
   Home: undefined;
@@ -46,6 +48,16 @@ export const Home = ({ navigation }: Props) => {
           followers: gitUser.followers,
           public_repos: gitUser.public_repos,
         });
+
+        Storage.adicionarUsuario({ 
+          name: gitUser.name,
+          login: gitUser.login,
+          avatar_url: gitUser.avatar_url,
+          location: gitUser.location,
+          id: gitUser.id,
+          followers: gitUser.followers,
+          public_repos: gitUser.public_repos,
+        })
       } catch (error) {
         Alert.alert(
           "usuário não encontrado",

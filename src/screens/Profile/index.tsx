@@ -8,17 +8,22 @@ import { getRepos, Repo } from '../../api/Repositories';
 import * as ProfileCard from '../../components/ProfileCard';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheet';
+import * as Storage from "../../api/Storage";
 
 export default function Profile() {
   const { user } = useUserContext();
   const { Repo } = useRepoContext();
   const [repos, setRepos] = useState<Repo[]>([]);
-
+  
   useEffect(() => {
+   
     loadRepos();
   }, [user]);
 
   const loadRepos = async () => {
+    const result= await Storage.carregarUsuarios();
+    console.log (result);
+    Alert.alert("resultado", result[0].name);
     if (user?.login) {
       try {
         const gitRepo = await getRepos(user.login);

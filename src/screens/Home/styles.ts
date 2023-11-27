@@ -54,7 +54,7 @@ export const ProfileButton = styled.TouchableOpacity`
   left: 150px;
   bottom: 50px;
   padding: 10px 20px;
-  border-radius: 50px;
+  border-radius: 30px;
   margin-top: 20px;
   align-items: center;
   justify-content: center;

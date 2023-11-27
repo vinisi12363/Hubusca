@@ -17,6 +17,7 @@ export const ProfileCard = styled(LinearGradient).attrs({
   padding-bottom: 20px;
   padding-left: 20px;
   justify-content: space-around;
+  boxsize: border-box;
 `;
 
 export const avatarIcon = styled.Image`

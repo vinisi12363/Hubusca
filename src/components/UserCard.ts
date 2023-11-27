@@ -36,6 +36,7 @@ export const CardTitle = styled.Text`
 `;
 
 export const CardSubtitle = styled.Text`
+  overflow: hidden;
   position: relative;
   bottom: 40px;
   left: 110px;

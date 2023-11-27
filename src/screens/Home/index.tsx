@@ -93,13 +93,13 @@ export const Home = ({ navigation }: Props) => {
             source={{ uri: user.avatar_url }}
           ></userCard.avatarIcon>
           <View>
-            <userCard.CardTitle ellipsizeMode="tail">
+            <userCard.CardTitle numberOfLines={1} ellipsizeMode="tail">
               Nome: {user.name}
             </userCard.CardTitle>
-            <userCard.CardSubtitle ellipsizeMode="tail">
+            <userCard.CardSubtitle numberOfLines={1}  ellipsizeMode="tail">
               login: {user.login}
             </userCard.CardSubtitle>
-            <userCard.CardSubtitle ellipsizeMode="tail">
+            <userCard.CardSubtitle numberOfLines={1} ellipsizeMode="tail">
               Localização: {user.location}
             </userCard.CardSubtitle>
 

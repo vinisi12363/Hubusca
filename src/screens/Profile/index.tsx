@@ -7,7 +7,7 @@ import { useRepoContext } from '../../Contexts/RepoContext';
 import { getRepos, Repo } from '../../api/Repositories';
 import * as ProfileCard from '../../components/ProfileCard';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import { StyleSheet } from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 export default function Profile() {
   const { user } = useUserContext();

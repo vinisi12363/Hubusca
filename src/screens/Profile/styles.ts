@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 
+
 export const RepoView = styled.View`
   flex: 1;
   background-color: #282828;
@@ -67,7 +68,7 @@ export const Container = styled.View`
 export const Title = styled.Text`
   font-size:40px;
   font-family: "Roboto";
-  font-weight: 400;
+  font-weight: bold;
   color: white;
 `;
 export const RepoContainer = styled.View`

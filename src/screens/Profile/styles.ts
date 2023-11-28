@@ -82,7 +82,7 @@ export const RepoContainer = styled.View`
   justify-content: space-between;
 `;
 export const ScrollView = styled.ScrollView`
-  background-color: red;
+  background-color: transparent;
   height: 100px;
   width: 100px;
 `;

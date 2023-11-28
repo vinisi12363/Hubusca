@@ -21,9 +21,6 @@ export default function Profile() {
   }, [user]);
 
   const loadRepos = async () => {
-    const result= await Storage.carregarUsuarios();
-    console.log (result);
-    Alert.alert("resultado", result[0].name);
     if (user?.login) {
       try {
         const gitRepo = await getRepos(user.login);
@@ -92,9 +89,9 @@ export default function Profile() {
           {repos?.map((repo: Repo) => (
             <>
             
-            <TouchableArea key={repo.name} onPress={() => openWebPage(repo.name)}>
+            <TouchableArea  key={repo.name} onPress={() => openWebPage(repo.name)}>
           
-              <RepoView key={repo.name}>
+              <RepoView >
                 <IconView>
                 <MaterialCommunityIcons
                         name="folder-pound"

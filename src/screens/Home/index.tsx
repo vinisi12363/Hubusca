@@ -7,7 +7,6 @@ import {
   TextArea,
   SearchContainer,
   Subtitle,
- 
 } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { User } from "../../api/User";
@@ -16,15 +15,10 @@ import { useUserContext } from "../../Contexts/UserContext";
 import { getUser } from "../../api/User";
 import { StackNavigationProp } from "@react-navigation/stack";
 import * as Storage from "../../api/Storage";
-import { Modal, View , Alert,Text, TouchableOpacity } from "react-native";
+import { Modal, View, Alert, Text, TouchableOpacity } from "react-native";
 import { useState } from "react";
-import {
-         ModalContainer,
-         MaterialMenuArea,
-         MaterialMenuAreaX
-} from '../../components/PopMenu'
-
-
+import * as ModalMenu from "../../components/PopMenu";
+import { ScrollView } from "../Profile/styles";
 
 type StackParam = {
   Home: undefined;
@@ -40,19 +34,17 @@ type Props = {
 export const Home = ({ navigation }: Props) => {
   const { user, fetchUser } = useUserContext();
   const [username, setUsername] = React.useState<string>("");
-  const [isVisible , setIsVisible] = useState<boolean>(false);
-  const [usersStored , setUsersStored] = useState<User []>([]);
-  useEffect(()=>{
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [usersStored, setUsersStored] = useState<User[]>([]);
+  useEffect(() => {
     loadStorage();
-    
-   },[]);  
+  }, []);
 
-  async function loadStorage(){
-      
-      const result = await Storage.carregarUsuarios();
-      if (result?.length > 0){
-        setUsersStored(result);
-      }
+  async function loadStorage() {
+    const result = await Storage.carregarUsuarios();
+    if (result?.length > 0) {
+      setUsersStored(result);
+    }
   }
   const searchUser = async () => {
     if (username) {
@@ -67,18 +59,17 @@ export const Home = ({ navigation }: Props) => {
           followers: gitUser.followers,
           public_repos: gitUser.public_repos,
         });
-        const userAlreadyStored:boolean = await Storage.verificarEExcluirUser(gitUser.login)
-        if(!userAlreadyStored){
-          Storage.adicionarUsuario({ 
-            name: gitUser.name,
-            login: gitUser.login,
-            avatar_url: gitUser.avatar_url,
-            location: gitUser.location,
-            id: gitUser.id,
-            followers: gitUser.followers,
-            public_repos: gitUser.public_repos,
-          })
-        }
+        // const userAlreadyStored:boolean = await Storage.verificarEExcluirUser(gitUser.login)
+
+        Storage.adicionarUsuario({
+          name: gitUser.name,
+          login: gitUser.login,
+          avatar_url: gitUser.avatar_url,
+          location: gitUser.location,
+          id: gitUser.id,
+          followers: gitUser.followers,
+          public_repos: gitUser.public_repos,
+        });
       } catch (error) {
         Alert.alert(
           "usuário não encontrado",
@@ -93,55 +84,73 @@ export const Home = ({ navigation }: Props) => {
     }
   };
   const callProfile = () => {
-    setIsVisible(true);
     navigation.navigate("Profile");
+    setIsVisible(false);
   };
-  const  callProfileStored = (username: string) =>{
-    setUsername (username);
-    setIsVisible(true);
-    searchUser();
+  const callProfileStored = (data: User) => {
+    fetchUser({
+      name: data.name,
+      login: data.login,
+      avatar_url: data.avatar_url,
+      location: data.location,
+      id: data.id,
+      followers: data.followers,
+      public_repos: data.public_repos,
+    });
+
     navigation.navigate("Profile");
-    
-  }
+    setIsVisible(false);
+  };
   return (
     <Container>
-        <MaterialMenuArea onPress={()=>{setIsVisible(true)}}>
-        <MaterialCommunityIcons
-                name="menu"
-                size={45}
-                color="white"
-              />
-        </MaterialMenuArea>
-        <Modal visible={isVisible} transparent animationType="slide">
-        
-        <ModalContainer style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <MaterialMenuAreaX onPress={()=>{setIsVisible(false)}}>
-        <MaterialCommunityIcons
-                name="close"
-                size={45}
-                color="black"
-              />
-        </MaterialMenuAreaX>
-          {usersStored?  (
+      <ModalMenu.MaterialMenuArea
+        onPress={() => {
+          setIsVisible(true);
+          console.log("visible", isVisible);
+        }}
+      >
+        <MaterialCommunityIcons name="menu" size={45} color="white" />
+      </ModalMenu.MaterialMenuArea>
+      <Modal visible={isVisible} transparent animationType="fade">
+       
+        <ModalMenu.ModalContainer
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+           <ModalMenu.CardHeaderMenu>Histórico de pesquisa:</ModalMenu.CardHeaderMenu>
+          <ModalMenu.MaterialMenuAreaX
+            onPress={() => {
+              setIsVisible(false);
+            }}
+          >
+            <MaterialCommunityIcons name="close" size={45} color="black" />
+          </ModalMenu.MaterialMenuAreaX>
+          <ModalMenu.ScrollViewMenu>
+            {usersStored ? (
               usersStored.map((user: User) => (
-                <userCard.UserCard key={user.login}>
-                  <userCard.avatarIcon
+                <ModalMenu.UserCardModalMenu >
+                  <ModalMenu.avatarMenuIcon
                     source={{ uri: user.avatar_url }}
-                  ></userCard.avatarIcon>
+                  ></ModalMenu.avatarMenuIcon>
                   <View>
-                    <userCard.CardTitle numberOfLines={1} ellipsizeMode="tail">
+                    <ModalMenu.CardSubtitleMenu numberOfLines={1} ellipsizeMode="tail" >
                       Nome: {user.name}
-                    </userCard.CardTitle>
-                    <userCard.CardSubtitle numberOfLines={1} ellipsizeMode="tail">
+                    </ModalMenu.CardSubtitleMenu>
+                    <ModalMenu.CardSubtitleMenu
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                    >
                       login: {user.login}
-                    </userCard.CardSubtitle>
-                    <userCard.CardSubtitle numberOfLines={1} ellipsizeMode="tail">
+                    </ModalMenu.CardSubtitleMenu>
+                    <ModalMenu.CardSubtitleMenu
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                    >
                       Localização: {user.location}
-                    </userCard.CardSubtitle>
+                    </ModalMenu.CardSubtitleMenu>
 
                     <ProfileButton
                       onPress={() => {
-                        callProfileStored(user.login) ;
+                        callProfileStored(user);
                       }}
                     >
                       <MaterialCommunityIcons
@@ -151,13 +160,13 @@ export const Home = ({ navigation }: Props) => {
                       />
                     </ProfileButton>
                   </View>
-                </userCard.UserCard>
+                </ModalMenu.UserCardModalMenu>
               ))
-            ) : <></>
-          }
-          
-
-        </ModalContainer>
+            ) : (
+              <></>
+            )}
+          </ModalMenu.ScrollViewMenu>
+        </ModalMenu.ModalContainer>
       </Modal>
       <AppImage source={require("../../../assets/hubusca.png")}></AppImage>
       <SearchContainer>
@@ -168,11 +177,8 @@ export const Home = ({ navigation }: Props) => {
           autoFocus={true}
           onChangeText={(text) => setUsername(text)}
           autoCorrect={false}
-        >
+        ></TextArea>
 
-        </TextArea>
-
-       
         <AppButton
           onPress={() => {
             searchUser();
@@ -191,7 +197,7 @@ export const Home = ({ navigation }: Props) => {
             <userCard.CardTitle numberOfLines={1} ellipsizeMode="tail">
               Nome: {user.name}
             </userCard.CardTitle>
-            <userCard.CardSubtitle numberOfLines={1}  ellipsizeMode="tail">
+            <userCard.CardSubtitle numberOfLines={1} ellipsizeMode="tail">
               login: {user.login}
             </userCard.CardSubtitle>
             <userCard.CardSubtitle numberOfLines={1} ellipsizeMode="tail">

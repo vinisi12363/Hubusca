@@ -10,6 +10,7 @@ import {
 } from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { User } from "../../api/User";
+import { TouchableOpacity } from "react-native";
 import * as userCard from "../../components/UserCard";
 import { useUserContext } from "../../Contexts/UserContext";
 import { getUser } from "../../api/User";
@@ -18,6 +19,7 @@ import * as Storage from "../../api/Storage";
 import { Modal, View, Alert } from "react-native";
 import { useState } from "react";
 import * as ModalMenu from "../../components/PopMenu";
+import { TouchableArea } from "../Profile/styles";
 
 type StackParam = {
   Home: undefined;
@@ -128,9 +130,12 @@ export const Home = ({ navigation }: Props) => {
             {usersStored ? (
               usersStored.map((user: User) => (
                 <ModalMenu.UserCardModalMenu>
+                  <TouchableOpacity onPress={()=>{callProfile()}}>
                   <ModalMenu.avatarMenuIcon
                     source={{ uri: user.avatar_url }}
                   ></ModalMenu.avatarMenuIcon>
+                  </TouchableOpacity>
+                  
                   <View>
                     <ModalMenu.CardSubtitleMenu
                       numberOfLines={1}
@@ -193,9 +198,10 @@ export const Home = ({ navigation }: Props) => {
 
       {user ? (
         <userCard.UserCard>
-          <userCard.avatarIcon
-            source={{ uri: user.avatar_url }}
-          ></userCard.avatarIcon>
+          <TouchableOpacity onPress={()=>{callProfile()}}>
+            <userCard.avatarIcon source={{ uri: user.avatar_url }} />
+          </TouchableOpacity>
+        
           <View>
             <userCard.CardTitle numberOfLines={1} ellipsizeMode="tail">
               Nome: {user.name}

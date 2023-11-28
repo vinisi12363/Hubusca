@@ -7,7 +7,7 @@ export const ProfileCard = styled(LinearGradient).attrs({
   end: { x: 1, y: 0 },
 })`
   position: relative;
-  bottom: 0px;
+  bottom: 0%;
   overflow: hidden;
   flex: 1;
   border-radius: 5px;
@@ -22,16 +22,16 @@ export const ProfileCard = styled(LinearGradient).attrs({
 
 export const avatarIcon = styled.Image`
   position: relative;
-  top: 30px;
-  right: 5px;
+  top: 10%;
+  right: 1%;
   width: 100px;
   height: 150px;
   border-radius: 50px;
 `;
 export const CardTitle = styled.Text`
   position: relative;
-  bottom: 100px;
-  left: 110px;
+  bottom: 50%;
+  left:30%;
   margin-top: 10px;
   font-size: 20px;
   font-weight: bold;

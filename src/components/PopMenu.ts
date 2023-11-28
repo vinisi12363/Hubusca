@@ -26,7 +26,7 @@ export const ScrollViewMenu = styled.ScrollView`
 export const UserCardModalMenu = styled(LinearGradient).attrs({
   colors: ["#7746AC", "#E04FB3"],
   start: { x: 0, y: 1 },
-  end: { x: 1, y: 0 },
+  end: { x:1, y: 0 },
 })`
   overflow: hidden;
   flex: 1;
@@ -63,8 +63,8 @@ export const MaterialMenuArea = styled.TouchableOpacity`
   width:50px;
   background:transparent;
   position: absolute;
-  right:330px;
-  bottom: 640px;
+  right:85%;
+  bottom: 90%;
   z-index:1;
 
 `
@@ -72,8 +72,8 @@ export const MaterialMenuAreaX = styled.TouchableOpacity`
   width:50px;
   background:transparent;
   position: absolute;
-  left:330px;
-  bottom:690px;
+  left:90%;
+  bottom:100%;
   z-index:1;
 
 `
@@ -94,7 +94,7 @@ export const CardHeaderMenu = styled.Text`
   overflow: hidden;
   position: relative;
   bottom: 0px;
-  left: 0px;
+  right:5%;
   font-size: 22px;
   font-weight: bold;
   font-family: "Roboto";

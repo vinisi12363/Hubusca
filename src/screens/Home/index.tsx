@@ -15,10 +15,9 @@ import { useUserContext } from "../../Contexts/UserContext";
 import { getUser } from "../../api/User";
 import { StackNavigationProp } from "@react-navigation/stack";
 import * as Storage from "../../api/Storage";
-import { Modal, View, Alert, Text, TouchableOpacity } from "react-native";
+import { Modal, View, Alert } from "react-native";
 import { useState } from "react";
 import * as ModalMenu from "../../components/PopMenu";
-import { ScrollView } from "../Profile/styles";
 
 type StackParam = {
   Home: undefined;
@@ -36,6 +35,7 @@ export const Home = ({ navigation }: Props) => {
   const [username, setUsername] = React.useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [usersStored, setUsersStored] = useState<User[]>([]);
+  
   useEffect(() => {
     loadStorage();
   }, []);
@@ -106,17 +106,17 @@ export const Home = ({ navigation }: Props) => {
       <ModalMenu.MaterialMenuArea
         onPress={() => {
           setIsVisible(true);
-          console.log("visible", isVisible);
         }}
       >
         <MaterialCommunityIcons name="menu" size={45} color="white" />
       </ModalMenu.MaterialMenuArea>
       <Modal visible={isVisible} transparent animationType="fade">
-       
         <ModalMenu.ModalContainer
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-           <ModalMenu.CardHeaderMenu>Histórico de pesquisa:</ModalMenu.CardHeaderMenu>
+          <ModalMenu.CardHeaderMenu>
+            Histórico de pesquisa:
+          </ModalMenu.CardHeaderMenu>
           <ModalMenu.MaterialMenuAreaX
             onPress={() => {
               setIsVisible(false);
@@ -127,12 +127,15 @@ export const Home = ({ navigation }: Props) => {
           <ModalMenu.ScrollViewMenu>
             {usersStored ? (
               usersStored.map((user: User) => (
-                <ModalMenu.UserCardModalMenu >
+                <ModalMenu.UserCardModalMenu>
                   <ModalMenu.avatarMenuIcon
                     source={{ uri: user.avatar_url }}
                   ></ModalMenu.avatarMenuIcon>
                   <View>
-                    <ModalMenu.CardSubtitleMenu numberOfLines={1} ellipsizeMode="tail" >
+                    <ModalMenu.CardSubtitleMenu
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
+                    >
                       Nome: {user.name}
                     </ModalMenu.CardSubtitleMenu>
                     <ModalMenu.CardSubtitleMenu

@@ -45,6 +45,36 @@ export const carregarUsuarios = async (): Promise<Usuario[]> => {
   }
 };
 
+export const verificarEExcluirUser = async (username: string): Promise<boolean> => {
+  try {
+    const usuariosExist = await AsyncStorage.getItem('usuarios');
+    
+    if (!usuariosExist) {
+      return false; // Se a lista não existir, o usuário não existe
+    }
+
+    const usuarios: Usuario[] = JSON.parse(usuariosExist);
+
+    // Verifica se o usuário está na lista
+    const usuarioIndex = usuarios.findIndex(user => user.login === username);
+
+    if (usuarioIndex !== -1) {
+      // Remove o usuário da lista
+      usuarios.splice(usuarioIndex, 1);
+
+      // Atualiza a lista no AsyncStorage
+      await AsyncStorage.setItem('usuarios', JSON.stringify(usuarios));
+      return true;
+    }
+
+    return false; // Se o usuário não foi encontrado na lista
+  } catch (error) {
+    console.error('Erro ao verificar e excluir usuário:', error);
+    return false;
+  }
+};
+
+
 // Sistema simples de notificação manual
 let listeners: ((usuarios: Usuario[]) => void)[] = [];
 

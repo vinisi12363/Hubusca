@@ -4,6 +4,8 @@ import { AppProvider } from "./src/Contexts/UserContext";
 import { RepoProvider } from "./src/Contexts/RepoContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useState } from 'react';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
 
